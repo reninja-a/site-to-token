@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reninja token</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient-1: #0f172a;
+            --bg-gradient-2: #1e293b;
+            --card-bg: #1e293b;
+            --card-bg-lighter: #334155;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --accent: #38bdf8;
+            --accent-dark: #0284c7;
+            --accent-light: #0c4a6e;
+            --border-radius: 12px;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            border: 1px solid #475569;
+        }
+
+        .header {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-weight: 500;
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .token-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .token-wrapper {
+            position: relative;
+        }
+
+        .token-display {
+            background-color: var(--accent-light);
+            padding: 1.5rem;
+            padding-right: 4rem;
+            border-radius: 8px;
+            font-family: 'Inter', monospace;
+            font-size: 0.9rem;
+            word-break: break-all;
+            color: var(--accent);
+            border-left: 3px solid var(--accent);
+            line-height: 1.5;
+            transition: all 0.3s ease;
+        }
+
+        .token-display:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 50%;
+            right: 0.75rem;
+            transform: translateY(-50%);
+            background-color: var(--accent-dark);
+            color: #fff;
+            border: none;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--accent);
+        }
+
+        .copy-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .copy-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .copy-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #10b981;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .copy-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .no-token {
+            background-color: #450a0a;
+            border-left-color: #b91c1c;
+            color: #fca5a5;
+        }
+
+        .decoration {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #0ea5e9, #0c4a6e);
+            border-radius: 50%;
+            top: -150px;
+            right: -150px;
+            filter: blur(80px);
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #0369a1, #0c4a6e);
+            border-radius: 50%;
+            bottom: -100px;
+            left: -100px;
+            filter: blur(60px);
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer:hover {
+            opacity: 1;
+        }
+
+        @keyframes glow {
+            0% {
+                color: var(--text-secondary);
+                text-shadow: none;
+            }
+            50% {
+                color: var(--accent);
+                text-shadow: 0 0 8px var(--accent), 0 0 12px var(--accent-dark);
+            }
+            100% {
+                color: var(--text-secondary);
+                text-shadow: none;
+            }
+        }
+
+        .footer-glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="decoration circle-1"></div>
+    <div class="decoration circle-2"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Seu TG-Token é</h1>
+            <p class="subtitle">Clique para copiar!</p>
+        </div>
+
+        <div class="token-wrapper">
+            <label class="token-label">Seu token de acesso:</label>
+            <div class="token-display no-token" id="tokenDisplay">
+                Nenhum token encontrado. Adicione ?code=SEUTOKEN na URL.
+            </div>
+            <button class="copy-btn" onclick="copyToken()">
+                <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <p class="footer footer-glow">Desenvolvido por reninja</p>
+    <p class="footer">✨ <a href="https://github.com/reninja-a" style="color: var(--text-secondary); text-decoration: none;">@reninja-a</a></p>
+
+    <div class="copy-toast" id="copyToast">Token copiado!</div>
+
+    <script>
+        // Função para obter parâmetros da URL
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Função para copiar o token
+        function copyToken() {
+            const token = document.getElementById('tokenDisplay').textContent;
+            navigator.clipboard.writeText(token).then(() => {
+                const toast = document.getElementById('copyToast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            });
+        }
+
+        // Verificar se há um token na URL
+        window.addEventListener('load', () => {
+            const code = getUrlParameter('code');
+            const tokenDisplay = document.getElementById('tokenDisplay');
+            
+            if (code) {
+                tokenDisplay.textContent = code;
+                tokenDisplay.classList.remove('no-token');
+            }
+        });
+    </script>
+</body>
+</html> 

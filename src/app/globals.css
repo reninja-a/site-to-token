@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-gradient-1: #0f172a;
+  --bg-gradient-2: #1e293b;
+  --card-bg: #1e293b;
+  --card-bg-lighter: #334155;
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --accent: #38bdf8;
+  --accent-dark: #0284c7;
+  --accent-light: #0c4a6e;
+  --border-radius: 12px;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.border-l-3 {
+  border-left-width: 3px;
+} 
