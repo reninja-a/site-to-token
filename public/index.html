@@ -88,7 +88,7 @@
         .token-display {
             background-color: var(--accent-light);
             padding: 1.5rem;
-            padding-right: 4rem;
+            padding-right: 4.5rem;
             border-radius: 8px;
             font-family: 'Inter', monospace;
             font-size: 0.9rem;
@@ -100,6 +100,7 @@
             min-height: 4rem;
             display: flex;
             align-items: center;
+            position: relative;
         }
 
         .token-display:hover {
@@ -125,15 +126,17 @@
             transition: all 0.2s ease;
             opacity: 0;
             pointer-events: none;
+            z-index: 2;
         }
 
-        .token-display:not(.no-token) + .copy-btn {
+        .token-display:not(.no-token) ~ .copy-btn {
             opacity: 1;
             pointer-events: auto;
         }
 
         .copy-btn:hover {
             background-color: var(--accent);
+            transform: translateY(-50%) scale(1.05);
         }
 
         .copy-btn:active {
